@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.URI;
@@ -24,6 +26,9 @@ import java.util.Map;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+
+    // 创建LinearLayout对象
+    LinearLayout mLinearLayout = new LinearLayout(this);
 
     private GridView MyGridView;
 
@@ -40,7 +45,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+
+        // 建立布局样式宽和高，对应xml布局中：
+        // android:layout_width="fill_parent"
+        // android:layout_height="fill_parent"
+        mLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        // 设置方向，对应xml布局中：
+        // android:orientation="vertical"
+        mLinearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        // setContentView(R.layout.activity_main);
+        setContentView(mLinearLayout);
+
         context = this;
         init();
         mlist = showThumbnails();
@@ -59,7 +78,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void init() {
-        MyGridView = (GridView) findViewById(R.id.gridview_1);
+
+        TextView MytextView = new TextView(this);
+        LinearLayout.LayoutParams Text_layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+
+//        MyGridView = (GridView) findViewById(R.id.gridview_1);
+        MyGridView = new GridView(this);
+
+        //android:layout_width="wrap_content"
+        //android:layout_height="wrap_content"
+        LinearLayout.LayoutParams Match_layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        mLinearLayout.addView(MytextView, Text_layoutParams);
+        //添加进入父类布局,并加入自身样式
+        mLinearLayout.addView(MyGridView, Match_layoutParams);
+
 
     }
 
